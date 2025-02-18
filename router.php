@@ -1,4 +1,16 @@
 <?php
+session_start();
+
+$action = $_GET['action'] ?? null;
+
+// Función para verificar acceso según el rol requerido
+function verificarAcceso($roleRequerido) {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $roleRequerido) {
+        echo "Acceso denegado. No tienes permiso para acceder a esta página.";
+        exit();
+    }
+}
+
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
     switch ($page) {
@@ -46,6 +58,9 @@ if (isset($_GET['page'])) {
             }
             include 'views/usuarios/perfil.php';
             break;
+        case 'producto-detalle':
+            include 'views/productos/detalle.php';
+            break;
         default:
             echo "Página no encontrada";
             break;
@@ -54,4 +69,17 @@ if (isset($_GET['page'])) {
     // Mostrar la lista de productos en la página inicial
     require_once 'controllers/ProductoController.php';
     mostrarProductos();
+}
+
+switch ($action) {
+    case 'mostrar-productos':
+        include __DIR__ . '/controllers/ProductoController.php';
+        mostrarProductos();
+        break;
+
+    // Otros casos...
+
+    default:
+        include __DIR__.'/resource_portada.php';
+        break;
 }

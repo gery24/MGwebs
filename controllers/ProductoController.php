@@ -31,6 +31,10 @@ function mostrarProductos() {
         $where[] = "precio <= :precio_max";
         $params['precio_max'] = $_GET['precio_max'];
     }
+    if (!empty($_GET['categoria'])) {
+        $where[] = "categoria_id = :categoria";
+        $params['categoria'] = $_GET['categoria'];
+    }
 
     // Construir la consulta
     $sql = "SELECT id_producto, nombre_producto, descripcion, precio FROM producto";
@@ -138,6 +142,13 @@ if (isset($_GET['action'])) {
             mostrarProductos();
             break;
     }
+}
+
+// Función para obtener categorías
+function obtenerCategorias() {
+    $db = conectarDB();
+    $query = $db->query("SELECT id_categoria, nombre_categoria FROM categoria");
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // Funciones de login, registro, etc.

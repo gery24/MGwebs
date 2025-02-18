@@ -281,8 +281,20 @@ session_start();
                 <input type="number" name="precio_max" placeholder="Precio máximo" step="0.01"
                        value="<?php echo isset($_GET['precio_max']) ? htmlspecialchars($_GET['precio_max']) : ''; ?>">
             </div>
+            <div class="filter-group">
+                <select name="categoria">
+                    <option value="">Seleccionar categoría</option>
+                    <?php
+                    $categorias = obtenerCategorias();
+                    foreach ($categorias as $categoria) {
+                        $selected = (isset($_GET['categoria']) && $_GET['categoria'] == $categoria['id_categoria']) ? 'selected' : '';
+                        echo "<option value=\"{$categoria['id_categoria']}\" $selected>{$categoria['nombre_categoria']}</option>";
+                    }
+                    ?>
+                </select>
+            </div>
             <button type="submit" class="btn-filter">Filtrar</button>
-            <?php if(isset($_GET['nombre']) || isset($_GET['precio_min']) || isset($_GET['precio_max'])): ?>
+            <?php if(isset($_GET['nombre']) || isset($_GET['precio_min']) || isset($_GET['precio_max']) || isset($_GET['categoria'])): ?>
                 <a href="/index.php" class="btn-clear">Limpiar filtros</a>
             <?php endif; ?>
         </form>
@@ -292,7 +304,11 @@ session_start();
         <?php if (!empty($productos)): ?>
             <?php foreach ($productos as $producto): ?>
                 <div class="producto-card">
-                    <h2><?php echo htmlspecialchars($producto['nombre_producto']); ?></h2>
+                    <h2>
+                        <a href="?page=producto-detalle&id=<?php echo $producto['id_producto']; ?>">
+                            <?php echo htmlspecialchars($producto['nombre_producto']); ?>
+                        </a>
+                    </h2>
                     <p><?php echo htmlspecialchars($producto['descripcion']); ?></p>
                     <p class="producto-precio"><?php echo number_format($producto['precio'], 2); ?> €</p>
                 </div>

@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="/public/assets/css/styles.css">
-    <style>
-        .btn-submit {
-            background-color: #064111;
-        }
-    </style>
 </head>
 <body>
     <div class="header-common">
@@ -21,10 +16,10 @@
         </div>
     </div>
     <h1>Iniciar Sesión</h1>
-    <form method="POST" action="/controllers/UsuarioController.php?action=login">
+    <form method="POST" action="/controllers/UsuarioController.php?action=login" class="login-form">
         <input type="text" name="usuario" placeholder="Usuario" required>
         <input type="password" name="password" placeholder="Contraseña" required>
-        <button type="submit">Iniciar sesión</button>
+        <button type="submit" class="btn-login">Iniciar sesión</button>
     </form>
     <p>¿No tienes cuenta? <a href="?page=register">Regístrate aquí</a></p>
     <p>¿Olvidaste tu contraseña? <a href="?page=reset-password">Restablecer contraseña</a></p>
